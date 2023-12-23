@@ -123,31 +123,38 @@ class JobProfileSection extends Component {
     )
   }
 
+  renderSearchBar = () => {
+    const {searchInput} = this.state
+
+    return (
+      <div className="search-input-content search-input">
+        <input
+          type="search"
+          className="search"
+          placeholder="Search"
+          value={searchInput}
+          onChange={this.changeSearchInput}
+          onKeyDown={this.onEnterKey}
+        />
+        <button
+          type="button"
+          data-testid="searchButton"
+          className="search-button"
+          onClick={this.getJobDetails}
+          label="search-icon"
+        >
+          <BsSearch className="search-icon" />
+        </button>
+      </div>
+    )
+  }
+
   renderJobDetails = () => {
-    const {jobsList, searchInput} = this.state
+    const {jobsList} = this.state
     const jobsDisplay = jobsList.length > 0
 
     return jobsDisplay ? (
       <div className="details-container">
-        <div className="search-input">
-          <input
-            type="search"
-            className="search"
-            placeholder="Search"
-            value={searchInput}
-            onChange={this.changeSearchInput}
-            onKeyDown={this.onEnterKey}
-          />
-          <button
-            type="button"
-            data-testid="searchButton"
-            className="search-button"
-            onClick={this.getJobDetails}
-            label="search-icon"
-          >
-            <BsSearch className="search-icon" />
-          </button>
-        </div>
         <ul className="job-details-item-container">
           {jobsList.map(eachData => (
             <JobCard key={eachData.id} jobDetails={eachData} />
@@ -156,25 +163,6 @@ class JobProfileSection extends Component {
       </div>
     ) : (
       <div className="no-jobs-container">
-        <div className="search-input-content">
-          <input
-            type="search"
-            className="search"
-            placeholder="Search"
-            value={searchInput}
-            onChange={this.changeSearchInput}
-            onKeyDown={this.onEnterKey}
-          />
-          <button
-            type="button"
-            data-testid="searchButton"
-            className="search-button"
-            onClick={this.getJobDetails}
-            label="search-icon"
-          >
-            <BsSearch className="search-icon" />
-          </button>
-        </div>
         <img
           src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png"
           alt="no jobs"
@@ -247,6 +235,7 @@ class JobProfileSection extends Component {
           />
         </div>
         <div className="responsive-items">
+          {this.renderSearchBar()}
           {this.renderJobProfileDetailsList()}
         </div>
       </div>
